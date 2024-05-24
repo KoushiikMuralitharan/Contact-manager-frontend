@@ -1,0 +1,10 @@
+/* src/index.scss */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+body{
+    margin-top: 1.5rem;
+}

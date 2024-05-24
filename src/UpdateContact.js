@@ -49,7 +49,7 @@ const UpdateContact = () => {
     },
     body: JSON.stringify({
       name: name,
-      phonenoe : phoneno,
+      phoneno : phoneno,
       age : age,
       typeOfContact : typeOfContact
      })

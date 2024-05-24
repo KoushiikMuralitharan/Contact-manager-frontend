@@ -13,7 +13,7 @@ const AddContacts = () => {
   e.preventDefault();
 
   try{
-    const loginResponse = await fetch(`http://localhost:8000/add-contact/${cookies.userID}`,{
+    const loginResponse = await fetch(`${process.env.REACT_APP_API_KEY}/add-contact/${cookies.userID}`,{
       method:"POST",
       headers:{
         "Authorization":`Bearer ${cookies.token}`,

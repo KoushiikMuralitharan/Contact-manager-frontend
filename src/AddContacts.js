@@ -8,9 +8,20 @@ const AddContacts = () => {
   const [age , setAge] = useState();
   const [typeOfContact , setTypeOfContact] = useState();
   const [cookies] = useCookies(['token']);
-
+  const [phoneError, setPhoneError] = useState("");
+  const [formError, setFormError] = useState("");
  const  handleSubmit = async(e) =>{
   e.preventDefault();
+ 
+  if (!name || !phoneno || !age || !typeOfContact) {
+    setFormError("All fields are required.");
+    return;
+  }
+
+  if (phoneno.length !== 10) {
+    setPhoneError("Phone number must be exactly 10 digits.");
+    return;
+  }
 
   try{
     const loginResponse = await fetch(`${process.env.REACT_APP_API_KEY}/add-contact/${cookies.userID}`,{
@@ -30,6 +41,15 @@ const AddContacts = () => {
     const response = await loginResponse.json();
     if(response.status === "failure"){
       alert(response.message);
+    }else {
+      // Clear form on successful submission
+      setName("");
+      setPhno("");
+      setAge("");
+      setTypeOfContact("");
+      setFormError("");
+      setPhoneError("");
+      alert("Contact added successfully!");
     }
   }catch(error){
     console.log("API error");
@@ -40,7 +60,19 @@ const AddContacts = () => {
  }
 
  const handlePhnoChange = (e) => {
-  setPhno(e.target.value);
+  const value = e.target.value;
+  const regex = /^[0-9\b]+$/; // Only allow digits
+
+  if (value === '' || regex.test(value)) {
+    if (value.length == 10) {
+      setPhno(value);
+      setPhoneError(''); // Clear any existing error
+    } else {
+      setPhoneError("Phone number cannot be more than 10 digits.");
+    }
+  } else {
+    setPhoneError("Only numeric values are allowed.");
+  }
  }
 
  const handleAgeChange = (e) => {
@@ -100,6 +132,7 @@ const AddContacts = () => {
                 onChange={handlePhnoChange}
                 className="mt-1 p-3 block w-full rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
+              {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
             </div>
             <div className="mb-4">
               <label
@@ -133,6 +166,7 @@ const AddContacts = () => {
                 className="mt-1 p-3 block w-full rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
+            {formError && <p className="text-red-500 text-sm mb-4">{formError}</p>}
             <div className="text-center">
               <button
                 type="submit"

@@ -15,7 +15,6 @@ const Navbar = () => {
         
         {/* Navigation Links */}
         <ul className="flex space-x-4">
-          <li><Link to={""} className="text-white hover:text-gray-200">Home</Link></li>
           <li><Link to={"login"} className="text-white hover:text-gray-200">Login</Link></li>
           <li><Link to={"signup"} className="text-white hover:text-gray-200">Signup</Link></li>
           <li><Link to={"viewcontacts"} className="text-white hover:text-gray-200">View Contact</Link></li>

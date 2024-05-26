@@ -26,6 +26,11 @@ const AddContacts = () => {
         typeOfContact: typeOfContact
       }),
     })
+
+    const response = await loginResponse.json();
+    if(response.status === "failure"){
+      alert(response.message);
+    }
   }catch(error){
     console.log("API error");
   }

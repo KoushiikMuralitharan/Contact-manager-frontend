@@ -2,16 +2,18 @@ import { useState } from 'react';
 import backgroundImage from './images/login-image.webp';
 import {useNavigate} from 'react-router-dom'
 import {useCookies} from 'react-cookie'
+import "./Login.css";
 function Login() {
  const [email , setEmail] = useState();
  const [password, setPassword] = useState();
+ const [loading, setLoading] = useState(false);
  const navigate = useNavigate();
  const [,setCookie] = useCookies([])
 
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-
+  setLoading(true);
   try{
     const loginResponse = await fetch(`${process.env.REACT_APP_API_KEY}/validateUser`,{
       method:"POST",
@@ -24,7 +26,9 @@ function Login() {
       }),
     })
 
-    const loginData = await loginResponse.json()
+    const loginData = await loginResponse.json();
+    setLoading(false);
+
       if(loginData.status === "failure"){
         alert(loginData.message)
       }else{
@@ -55,6 +59,11 @@ const handlePasswordChange = (event) => {
     
     {/* Login Container */}
     <div className="bg-white p-8 rounded-lg shadow-md max-w-md md:w-1/2 md:ml-8">
+    {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
+            <div className="loader"></div>
+          </div>
+        )}
         <h2 className="text-3xl font-semibold mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

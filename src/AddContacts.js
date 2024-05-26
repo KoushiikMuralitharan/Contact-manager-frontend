@@ -68,7 +68,7 @@ const AddContacts = () => {
       setPhno(value);
       setPhoneError(''); // Clear any existing error
     } else {
-      setPhoneError("Phone number cannot be more than 10 digits.");
+      setPhoneError("Phone number incorrect.");
     }
   } else {
     setPhoneError("Only numeric values are allowed.");

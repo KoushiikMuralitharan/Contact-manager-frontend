@@ -17,6 +17,7 @@ const Signup = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
     setLoading(true);
+    setFormError("");
     if (!username || !email || !password) {
       setFormError("All fields are required.");
       return;
@@ -40,14 +41,18 @@ const Signup = () => {
       
       if(loginData.status === "failure"){
         alert(loginData.message);
-      }else{
+      }else if(loginData.status === "success" && loginData.userDetail){
         alert("user account created successfully.");
         setCookie('token', loginData.accessToken, { maxAge: 60 * 60 * 60 })
         setCookie('userID', loginData.userDetail.userID, { maxAge: 60 * 60 * 60 })
         navigate("/addcontact")
+      }else {
+        setFormError("Unexpected response from the server.");
       }
     }catch(error){
         console.log("API error",error.message)
+        setLoading(false); // Stop loading if there's an API error
+        setFormError("An error occurred. Please try again.");
     }
   }
 

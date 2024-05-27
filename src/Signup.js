@@ -41,7 +41,7 @@ const Signup = () => {
       if(loginData.status === "failure"){
         alert(loginData.message);
       }else{
-        //alert("user account created successfully.");
+        alert("user account created successfully.");
         setCookie('token', loginData.accessToken, { maxAge: 60 * 60 * 60 })
         setCookie('userID', loginData.userDetail.userID, { maxAge: 60 * 60 * 60 })
         navigate("/addcontact")

@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from './images/contact-management.png';
-import  axios from 'axios';
+import { useCookies } from 'react-cookie';
+import './Signup.css'
 const Signup = () => {
 
   const [username , setUsername] = useState();
   const [email , setEmail] = useState();
   const [password , setPassword] = useState();
   const [formError, setFormError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [,setCookie] = useCookies([])
   const navigate = useNavigate();
   
   
   const handleSubmit = async (e) =>{
     e.preventDefault();
-
+    setLoading(true);
     if (!username || !email || !password) {
       setFormError("All fields are required.");
       return;
@@ -31,11 +34,17 @@ const Signup = () => {
         password : password
        }),
       })
+
+      const loginData = await response.json();
+      setLoading(false);
+      
       if(!response.ok){
         alert("Failed to signup");
       }else{
         alert("user account created successfully.");
-        navigate('/addcontact');
+        setCookie('token', loginData.accessToken, { maxAge: 60 * 60 * 60 })
+        setCookie('userID', loginData.userDetail.userID, { maxAge: 60 * 60 * 60 })
+        navigate("/addcontact")
       }
     }catch(error){
         console.log("API error",error.message)
@@ -51,6 +60,11 @@ const Signup = () => {
 
     {/* Signup Container */}
     <div className="bg-white p-8 rounded-lg shadow-md max-w-md md:w-1/2 md:ml-8">
+    {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
+            <div className="loader"></div>
+          </div>
+        )}
       <h2 className="text-3xl font-semibold mb-4 text-center">Sign Up</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

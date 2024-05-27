@@ -38,8 +38,8 @@ const Signup = () => {
       const loginData = await response.json();
       setLoading(false);
       
-      if(!response.ok){
-        alert("Failed to signup");
+      if(loginData.status === "failure"){
+        alert(loginData.message);
       }else{
         //alert("user account created successfully.");
         setCookie('token', loginData.accessToken, { maxAge: 60 * 60 * 60 })

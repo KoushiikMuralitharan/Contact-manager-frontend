@@ -7,10 +7,10 @@ import axios from 'axios'
 const UpdateContact = () => {
   const {id} = useParams();
   const [contact, setContact] = useState([]);
-  const [name,setName] = useState( );
-  const [phoneno, setPhno] = useState();
-  const [age , setAge] = useState();
-  const [typeOfContact, setTypeOfContact] =useState();
+  const [name,setName] = useState("");
+  const [phoneno, setPhno] = useState("");
+  const [age , setAge] = useState("");
+  const [typeOfContact, setTypeOfContact] = useState("");
   const [cookies] = useCookies(['token']);
 
   const navigate = useNavigate();

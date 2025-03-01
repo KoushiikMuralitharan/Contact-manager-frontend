@@ -4,16 +4,17 @@ import {useNavigate} from 'react-router-dom'
 import {useCookies} from 'react-cookie'
 import "./Login.css";
 function Login() {
- const [email , setEmail] = useState();
- const [password, setPassword] = useState();
+ const [email , setEmail] = useState("");
+ const [password, setPassword] = useState("");
  const [loading, setLoading] = useState(false);
  const [,setCookie] = useCookies([])
- const navigate = useNavigate();
+ const navigate = useNavigate("");
  
  const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
   try{
+    console.log(process.env.REACT_APP_API_KEY);
     const loginResponse = await fetch(`${process.env.REACT_APP_API_KEY}/validateUser`,{
       method:"POST",
       headers:{

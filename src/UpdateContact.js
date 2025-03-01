@@ -155,6 +155,7 @@ const UpdateContact = () => {
         {/* Container to display text */}
         <div className="relative bg-white p-8 rounded-lg shadow-md max-w-sm ml-4 backdrop-filter backdrop-blur-lg bg-opacity-50">
           <h2 className="text-3xl font-bold mb-4 text-center">Contact List</h2>
+          
           <p className="text-gray-700">
             One small benefit of storing contacts using our website is the ease
             of access and organization. By centralizing contact information in
